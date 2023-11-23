@@ -20,7 +20,7 @@ namespace Repositories
 
         public Product? GetOneProduct(int id, bool trackChanges)
         {
-            throw new NotImplementedException();
+            return FindByCondition(p => p.ProductId.Equals(id), trackChanges);
         }
     }
 }

@@ -11,16 +11,18 @@ namespace Repositories
     {
         private readonly RepositoryContext _context;
         private readonly IProductRepository _productRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public RepositoryManager(IProductRepository productRepository, RepositoryContext context)
+        public RepositoryManager(IProductRepository productRepository, RepositoryContext context, CategoryRepository categoryRepository)
         {
             _productRepository = productRepository;
             _context = context;
+            _categoryRepository = categoryRepository;
         }
 
         public IProductRepository Product => _productRepository;
 
-        public ICategoryRepository Category => throw new NotImplementedException();
+        public ICategoryRepository Category => _categoryRepository;
 
         public void Save()
         {
