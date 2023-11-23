@@ -1,9 +1,4 @@
-﻿using Services.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Services.Contracts;
 
 namespace Services
 {
@@ -12,14 +7,15 @@ namespace Services
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
 
-        public ServiceManager(IProductService productService, ICategoryService categoryService)
+        public ServiceManager(IProductService productService, 
+        ICategoryService categoryService)
         {
             _productService = productService;
             _categoryService = categoryService;
         }
 
-        public IProductService productService => _productService;
+        public IProductService ProductService => _productService;
 
-        public ICategoryService categoryService => _categoryService;
+        public ICategoryService CategoryService => _categoryService;
     }
 }
