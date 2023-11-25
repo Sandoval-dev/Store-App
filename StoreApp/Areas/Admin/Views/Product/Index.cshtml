@@ -1,5 +1,26 @@
-﻿@{
-    Layout = "_Layout";
-}
+﻿@model IEnumerable<Product>
 
-<h3>Product Index</h3>
+<div class="text-center">
+    <div class="display-6">Products</div>
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Operations</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Product prd in Model)
+            {
+                <tr>
+                    <th scope="row">@prd.ProductId</th>
+                    <td>@prd.ProductName</td>
+                    <td>@prd.Price</td>
+                    <td>Operations</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
