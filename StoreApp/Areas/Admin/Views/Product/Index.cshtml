@@ -22,8 +22,13 @@
                 <tr>
                     <th scope="row">@prd.ProductId</th>
                     <td>@prd.ProductName</td>
-                    <td>@prd.Price</td>
-                    <td>Operations</td>
+                    <td>@prd.Price.ToString("c")</td>
+                    <td>
+                        <div>
+                            <a class="btn btn-warning" asp-action="Update" asp-route-id="@prd.ProductId"><i class="fa fa-edit"></i> Edit</a>
+                            <a class="btn btn-primary" asp-action="Get" asp-area="=" target="_blank" asp-controller="Product" asp-route-id="@prd.ProductId"><i class="fa fa-search"></i> Web</a>
+                        </div>
+                    </td>
                 </tr>
             }
         </tbody>
