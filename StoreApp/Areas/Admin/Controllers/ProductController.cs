@@ -24,7 +24,7 @@ namespace StoreApp.Areas.Admin.Controllers
 
         public IActionResult Create()
         {
-            ViewBag.Categories =GetCategoriesSelectList();
+            ViewBag.Categories = GetCategoriesSelectList();
 
             return View();
         }
@@ -41,14 +41,7 @@ namespace StoreApp.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                //file operation
-                string path = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot","images",file.FileName);
 
-                using (var stream = new FileStream(path,FileMode.Create))
-                {
-                    await file.CopyToAsync(stream);
-                }
-                productDto.ImageUrl = String.Concat("/images/", file.FileName);
                 _manager.ProductService.CreateProduct(productDto);
                 return RedirectToAction("Index");
             }
@@ -65,11 +58,19 @@ namespace StoreApp.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update([FromForm] ProductDtoForUpdate productDto)
+        public async Task<IActionResult> Update([FromForm] ProductDtoForUpdate productDto, IFormFile file)
         {
             if (ModelState.IsValid)
-            {    
-               
+            {
+                //file operation
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", file.FileName);
+
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+                productDto.ImageUrl = String.Concat("/images/", file.FileName);
+
                 _manager.ProductService.UpdateOneProduct(productDto);
                 return RedirectToAction("Index");
             }
