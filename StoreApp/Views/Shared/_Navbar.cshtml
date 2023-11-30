@@ -21,7 +21,12 @@
 
             </ul>
             <ul class="navbar-nav">
-                <a target="_blank" class="nav-link" aria-current="page" asp-controller="Dashboard" asp-action="Index" asp-area="Admin">Admin</a>
+                <li class="nav-item">
+                    <a target="_blank" class="nav-link" aria-current="page" asp-page="/Cart" asp-area="">Cart</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" class="nav-link" aria-current="page" asp-controller="Dashboard" asp-action="Index" asp-area="Admin">Admin</a>
+                </li>
             </ul>
         </div>
     </div>
