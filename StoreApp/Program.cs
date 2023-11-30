@@ -17,6 +17,8 @@ builder.Services.AddDbContext<RepositoryContext>(options =>
     b => b.MigrationsAssembly("StoreApp"));
 });
 
+builder.Services.AddMemoryCache();
+builder.Services.AddSession();
 builder.Services.AddScoped<IRepositoryManager, RepositoryManger>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
@@ -32,6 +34,8 @@ var app = builder.Build();
 app.UseStaticFiles();
 app.UseHttpsRedirection();
 app.UseRouting();
+app.UseSession();
+
 
 app.UseEndpoints(endpoints =>
 {
