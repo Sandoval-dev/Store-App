@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using StoreApp.Infrastructe.Extensions;
 
 namespace StoreApp.Pages
 {
@@ -21,6 +22,7 @@ namespace StoreApp.Pages
         {
             //FullName = name;
             HttpContext.Session.SetString("name", name);
+            
         }
 
     }
