@@ -1,4 +1,4 @@
-﻿using Entities.Dtos;
+using Entities.Dtos;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -25,14 +25,7 @@ namespace StoreApp.Areas.Admin.Controllers
         public IActionResult Create()
         {
             ViewBag.Categories = GetCategoriesSelectList();
-
             return View();
-        }
-
-        private SelectList GetCategoriesSelectList()
-        {
-            return
-                new SelectList(_manager.CategoryService.GetAllCategories(false), "CategoryId", "CategoryName", "1");
         }
 
         [HttpPost]
@@ -41,13 +34,27 @@ namespace StoreApp.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                // file operation
+                string path = Path.Combine(Directory.GetCurrentDirectory(),
+                "wwwroot","images",file.FileName);
 
+                using (var stream = new FileStream(path,FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+                productDto.ImageUrl = String.Concat("/images/",file.FileName);
                 _manager.ProductService.CreateProduct(productDto);
                 return RedirectToAction("Index");
             }
             return View();
-
         }
+        private SelectList GetCategoriesSelectList()
+        {
+            return new SelectList(_manager.CategoryService.GetAllCategories(false),
+            "CategoryId",
+            "CategoryName", "1");
+        }
+
 
         public IActionResult Update([FromRoute(Name = "id")] int id)
         {
@@ -62,23 +69,24 @@ namespace StoreApp.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                //file operation
-                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", file.FileName);
+                // file operation
+                string path = Path.Combine(Directory.GetCurrentDirectory(),
+                "wwwroot","images",file.FileName);
 
-                using (var stream = new FileStream(path, FileMode.Create))
+                using (var stream = new FileStream(path,FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
                 }
-                productDto.ImageUrl = String.Concat("/images/", file.FileName);
+                productDto.ImageUrl = String.Concat("/images/",file.FileName);
 
                 _manager.ProductService.UpdateOneProduct(productDto);
                 return RedirectToAction("Index");
             }
             return View();
-
         }
 
 
+        [HttpGet]
         public IActionResult Delete([FromRoute(Name = "id")] int id)
         {
             _manager.ProductService.DeleteOneProduct(id);

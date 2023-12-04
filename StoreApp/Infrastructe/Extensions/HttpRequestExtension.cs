@@ -1,10 +1,12 @@
-﻿namespace StoreApp.Infrastructe.Extensions
+namespace StoreApp.Infrastructe.Extensions
 {
     public static class HttpRequestExtension
     {
-        public static string  PathAndQuery(this HttpRequest request)
+        public static string PathAndQuery(this HttpRequest request)
         {
-            return request.QueryString.HasValue ? $"{request.Path}{request.QueryString}" : request.Path.ToString();
+            return request.QueryString.HasValue
+                ? $"{request.Path}{request.QueryString}"
+                : request.Path.ToString();
         }
     }
 }

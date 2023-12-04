@@ -1,4 +1,3 @@
-@using StoreApp.Infrastructe.Extensions
 @model Product
 
 <div class="col-sm-12 col-md-4 my-2">
@@ -6,10 +5,8 @@
         <img src="@Model?.ImageUrl" class="card-img-top" alt="...">
         <div class="card-body">
             <h5 class="card-title">@Model.ProductName</h5>
-            <p class="card-text">
-                Some quick example text to build on the card title and make up the bulk of the card's
-                content.
-            </p>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                content.</p>
             <div class="btn btn-group">
                 <a asp-action="Get" asp-route-id="@Model.ProductId" class="btn btn-primary">
                     <i class="fa-solid fa-arrow-right"></i>
@@ -18,7 +15,9 @@
                 <form id="@Model.ProductId" asp-page="/cart" method="post">
                     <input type="hidden" asp-for="ProductId" />
                     <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
-                    <button type="submit" class="btn btn-outline-primary"><i class="fa fa-cart-plus"></i></button>
+                    <button type="submit" class="btn btn-outline-primary">
+                        <i class="fa fa-cart-plus"></i>
+                    </button>
                 </form>
 
             </div>

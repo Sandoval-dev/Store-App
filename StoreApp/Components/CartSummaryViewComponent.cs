@@ -1,21 +1,19 @@
-﻿using Entities.Models;
+using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
-using Services.Contracts;
 
 namespace StoreApp.Components
 {
-    public class CartSummaryViewComponent:ViewComponent
+    public class CartSummaryViewComponent : ViewComponent
     {
         private readonly Cart _cart;
-
-        public CartSummaryViewComponent(Cart cart)
+        public CartSummaryViewComponent(Cart cartService)
         {
-            _cart = cart;
+            _cart = cartService;
         }
 
         public string Invoke()
         {
-            return  _cart.Lines.Count().ToString();
+            return _cart.Lines.Count().ToString();
         }
     }
 }

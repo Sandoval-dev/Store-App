@@ -16,7 +16,7 @@ namespace Repositories
 
         public void Create(T entity)
         {
-           _context.Set<T>().Add(entity);
+            _context.Set<T>().Add(entity);
         }
 
         public IQueryable<T> FindAll(bool trackChanges)
@@ -40,7 +40,7 @@ namespace Repositories
 
         public void Update(T entity)
         {
-           _context.Set<T>().Update(entity);
+            _context.Set<T>().Update(entity);
         }
     }
 }
