@@ -55,6 +55,12 @@ namespace Services
             return productDto;
         }
 
+        public IQueryable<Product> GetShowcaseProducts(bool trackChanges)
+        {
+            var products =_manager.Product.GetShowcaseProducts(trackChanges);
+            return products;
+        }
+
         public void UpdateOneProduct(ProductDtoForUpdate productDto)
         {
             // var entity = _manager.Product.GetOneProduct(productDto.ProductId, true);
