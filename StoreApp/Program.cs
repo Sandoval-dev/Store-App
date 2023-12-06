@@ -25,6 +25,9 @@ app.UseHttpsRedirection();
 app.UseRouting();
 
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapAreaControllerRoute(
@@ -37,6 +40,8 @@ app.UseEndpoints(endpoints =>
 
     endpoints.MapRazorPages();
 });
+
+
 
 app.ConfigureAndCheckMigration();
 app.ConfigureLocalization();
