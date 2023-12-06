@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 
 namespace StoreApp.Components
 {
-    public class ProductFilterMenuViewComponent :ViewComponent
+    public class ProductFilterMenuViewComponent : ViewComponent
     {
         public IViewComponentResult Invoke()
         {

@@ -6,13 +6,12 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 builder.Services.ConfigureDbContext(builder.Configuration);
-builder.Services.ConfigureSession();
-builder.Services.ConfigureRepostioryRegistration();
 builder.Services.ConfigureIdentity();
-builder.Services.ConfigureServiceRegistiration();
+builder.Services.ConfigureSession();
+builder.Services.ConfigureRepositoryRegistration();
+builder.Services.ConfigureServiceRegistration();
 builder.Services.ConfigureRouting();
-
-
+builder.Services.ConfigureApplicationCookie();
 
 builder.Services.AddAutoMapper(typeof(Program));
 
@@ -23,7 +22,6 @@ app.UseSession();
 
 app.UseHttpsRedirection();
 app.UseRouting();
-
 
 app.UseAuthentication();
 app.UseAuthorization();
@@ -42,8 +40,6 @@ app.UseEndpoints(endpoints =>
 });
 
 
-
-app.ConfigureAndCheckMigration();
 app.ConfigureLocalization();
 app.ConfigureDefaultAdminUser();
 app.Run();

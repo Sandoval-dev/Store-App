@@ -1,31 +1,28 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace StoreApp.Models
 {
     public class LoginModel
     {
+        private string? _returnurl;
 
-        private string? _returnUrl;
-
-        [Required(ErrorMessage ="Name is required.")]
+        [Required(ErrorMessage = "Name is required.")]
         public string? Name { get; set; }
-
-        [Required(ErrorMessage ="Password is required.")]
+        [Required(ErrorMessage = "Password is required.")]
         public string? Password { get; set; }
 
         public string ReturnUrl
         {
-            get {
-                if (_returnUrl is null)
-                {
+            get
+            {
+                if(_returnurl is null)
                     return "/";
-                }
                 else
-                { return _returnUrl; }
+                    return _returnurl;
             }
             set
             {
-                _returnUrl = value;
+                _returnurl = value;
             }
         }
     }

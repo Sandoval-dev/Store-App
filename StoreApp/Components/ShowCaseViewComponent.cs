@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Services.Contracts;
 
 namespace StoreApp.Components
 {
-    public class ShowCaseViewComponent:ViewComponent
+    public class ShowcaseViewComponent : ViewComponent
     {
         private readonly IServiceManager _manager;
 
-        public ShowCaseViewComponent(IServiceManager manager)
+        public ShowcaseViewComponent(IServiceManager manager)
         {
             _manager = manager;
         }
@@ -17,6 +17,5 @@ namespace StoreApp.Components
             var products = _manager.ProductService.GetShowcaseProducts(false);
             return View(products);
         }
-
     }
 }

@@ -21,7 +21,8 @@ namespace Repositories
 
         public IQueryable<Product> GetAllProductsWithDetails(ProductRequestParameters p)
         {
-            return _context.Products
+            return _context
+                .Products
                 .FilteredByCategoryId(p.CategoryId)
                 .FilteredBySearchTerm(p.SearchTerm)
                 .FilteredByPrice(p.MinPrice, p.MaxPrice, p.IsValidPrice)
@@ -36,7 +37,8 @@ namespace Repositories
 
         public IQueryable<Product> GetShowcaseProducts(bool trackChanges)
         {
-            return FindAll(trackChanges).Where(p => p.ShowCase.Equals(true));
+            return FindAll(trackChanges)
+                .Where(p => p.ShowCase.Equals(true));
         }
 
         public void UpdateOneProduct(Product entity) => Update(entity);

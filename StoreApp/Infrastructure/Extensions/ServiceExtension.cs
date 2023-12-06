@@ -1,22 +1,24 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Entities.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Repositories;
 using Repositories.Contracts;
-using Services.Contracts;
 using Services;
-using Entities.Models;
+using Services.Contracts;
 using StoreApp.Models;
-using Microsoft.AspNetCore.Identity;
 
 namespace StoreApp.Infrastructure.Extensions
 {
     public static class ServiceExtension
     {
-        public static void ConfigureDbContext(this IServiceCollection services, IConfiguration configuration)
+        public static void ConfigureDbContext(this IServiceCollection services,
+            IConfiguration configuration)
         {
             services.AddDbContext<RepositoryContext>(options =>
             {
                 options.UseSqlite(configuration.GetConnectionString("sqlconnection"),
-                b => b.MigrationsAssembly("StoreApp"));
+                    b => b.MigrationsAssembly("StoreApp"));
 
                 options.EnableSensitiveDataLogging(true);
             });
@@ -31,10 +33,9 @@ namespace StoreApp.Infrastructure.Extensions
                 options.Password.RequireUppercase = false;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireDigit = false;
-                options.Password.RequiredLength = 5;
+                options.Password.RequiredLength = 6;
             })
-                .AddEntityFrameworkStores<RepositoryContext>();
-
+            .AddEntityFrameworkStores<RepositoryContext>();
         }
 
         public static void ConfigureSession(this IServiceCollection services)
@@ -45,12 +46,11 @@ namespace StoreApp.Infrastructure.Extensions
                 options.Cookie.Name = "StoreApp.Session";
                 options.IdleTimeout = TimeSpan.FromMinutes(10);
             });
-
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<Cart>(c => SessionCart.GetCart(c));
         }
 
-        public static void ConfigureRepostioryRegistration(this IServiceCollection services)
+        public static void ConfigureRepositoryRegistration(this IServiceCollection services)
         {
             services.AddScoped<IRepositoryManager, RepositoryManger>();
             services.AddScoped<IProductRepository, ProductRepository>();
@@ -58,12 +58,25 @@ namespace StoreApp.Infrastructure.Extensions
             services.AddScoped<IOrderRepository, OrderRepository>();
         }
 
-        public static void  ConfigureServiceRegistiration(this IServiceCollection services)
+        public static void ConfigureServiceRegistration(this IServiceCollection services)
         {
             services.AddScoped<IServiceManager, ServiceManager>();
             services.AddScoped<IProductService, ProductManager>();
             services.AddScoped<ICategoryService, CategoryManager>();
             services.AddScoped<IOrderService, OrderManager>();
+            services.AddScoped<IAuthService, AuthManager>();
+
+        }
+
+        public static void ConfigureApplicationCookie(this IServiceCollection services)
+        {
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = new PathString("/Account/Login");
+                options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+                options.AccessDeniedPath = new PathString("/Account/AccessDenied");
+            });
         }
 
         public static void ConfigureRouting(this IServiceCollection services)

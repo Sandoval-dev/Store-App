@@ -48,7 +48,9 @@ namespace Services
 
         public IEnumerable<Product> GetLastestProducts(int n, bool trackChanges)
         {
-            return _manager.Product.FindAll(trackChanges)
+            return _manager
+                .Product
+                .FindAll(trackChanges)
                 .OrderByDescending(prd => prd.ProductId)
                 .Take(n);
         }
@@ -68,9 +70,9 @@ namespace Services
             return productDto;
         }
 
-        public IQueryable<Product> GetShowcaseProducts(bool trackChanges)
+        public IEnumerable<Product> GetShowcaseProducts(bool trackChanges)
         {
-            var products =_manager.Product.GetShowcaseProducts(trackChanges);
+            var products = _manager.Product.GetShowcaseProducts(trackChanges);
             return products;
         }
 

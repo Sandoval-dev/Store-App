@@ -212,8 +212,8 @@ namespace StoreApp.Migrations
                             ProductId = 8,
                             CategoryId = 1,
                             ImageUrl = "/images/8.jpg",
-                            Price = 450m,
-                            ProductName = "Xp-Pen",
+                            Price = 145m,
+                            ProductName = "A Doll's House",
                             ShowCase = true,
                             Summary = ""
                         },
@@ -222,19 +222,79 @@ namespace StoreApp.Migrations
                             ProductId = 9,
                             CategoryId = 1,
                             ImageUrl = "/images/9.jpg",
-                            Price = 4540m,
-                            ProductName = "Samsung Galaxay F5",
+                            Price = 4445m,
+                            ProductName = "Blindness",
                             ShowCase = true,
                             Summary = ""
                         },
                         new
                         {
                             ProductId = 10,
-                            CategoryId = 2,
+                            CategoryId = 1,
                             ImageUrl = "/images/10.jpg",
-                            Price = 457m,
-                            ProductName = "Hp Mouse",
+                            Price = 545m,
+                            ProductName = "Boston",
                             ShowCase = true,
+                            Summary = ""
+                        },
+                        new
+                        {
+                            ProductId = 11,
+                            CategoryId = 1,
+                            ImageUrl = "/images/11.jpg",
+                            Price = 385m,
+                            ProductName = "War and Piece",
+                            ShowCase = true,
+                            Summary = ""
+                        },
+                        new
+                        {
+                            ProductId = 12,
+                            CategoryId = 1,
+                            ImageUrl = "/images/12.jpg",
+                            Price = 845m,
+                            ProductName = "The Sound of the Mountain",
+                            ShowCase = true,
+                            Summary = ""
+                        },
+                        new
+                        {
+                            ProductId = 13,
+                            CategoryId = 1,
+                            ImageUrl = "/images/13.jpg",
+                            Price = 415m,
+                            ProductName = "The Idiot",
+                            ShowCase = true,
+                            Summary = ""
+                        },
+                        new
+                        {
+                            ProductId = 14,
+                            CategoryId = 1,
+                            ImageUrl = "/images/14.jpg",
+                            Price = 325m,
+                            ProductName = "The Trial",
+                            ShowCase = true,
+                            Summary = ""
+                        },
+                        new
+                        {
+                            ProductId = 15,
+                            CategoryId = 1,
+                            ImageUrl = "/images/15.jpg",
+                            Price = 99m,
+                            ProductName = "Masnavi",
+                            ShowCase = true,
+                            Summary = ""
+                        },
+                        new
+                        {
+                            ProductId = 16,
+                            CategoryId = 1,
+                            ImageUrl = "/images/16.jpg",
+                            Price = 199m,
+                            ProductName = "The Magic Mountain",
+                            ShowCase = false,
                             Summary = ""
                         });
                 });
@@ -267,22 +327,22 @@ namespace StoreApp.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "bf0341da-f83d-4436-9c48-0fab4d066fe0",
-                            ConcurrencyStamp = "32232ecb-58c4-4ecf-bfd3-37fa5a4d5200",
+                            Id = "5fef5cde-a221-45ad-9c67-a015597eba17",
+                            ConcurrencyStamp = "898b49b8-1a5f-45ca-b759-c648d379b264",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "fc0938bd-eace-48bd-9966-5df9e96cc123",
-                            ConcurrencyStamp = "bca51b2a-65cc-4aff-ad31-b14150a36c04",
+                            Id = "f29e9071-3103-4e3e-8079-fbdec9e73360",
+                            ConcurrencyStamp = "b29c22c9-8fc7-47bd-9f4a-ec413f460bdf",
                             Name = "Editor",
                             NormalizedName = "EDITOR"
                         },
                         new
                         {
-                            Id = "80a52a1a-6e7e-4dae-a2b1-3f99dd0aa957",
-                            ConcurrencyStamp = "c9100850-f28e-43fb-9827-68d0bd9a36e3",
+                            Id = "1d27a658-074c-4316-a3fb-b5c8a756c4a0",
+                            ConcurrencyStamp = "006f1967-fdc5-40b4-a0bb-ed483252e26f",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
