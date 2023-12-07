@@ -4,8 +4,8 @@ namespace Entities.Dtos
 {
     public record UserDtoForCreation : UserDto
     {
+        [Required(ErrorMessage ="Password is required.")]
         [DataType(DataType.Password)]
-        [Required(ErrorMessage = "Password is required.")]
-        public String? Password { get; init; }
+        public String? Password { get; set; }
     }
 }

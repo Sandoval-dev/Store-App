@@ -23,15 +23,17 @@ namespace StoreApp.Areas.Admin.Controllers
             return View(users);
         }
 
+
         public IActionResult Create()
         {
             return View(new UserDtoForCreation()
             {
-                Roles = new HashSet<string>(_manager
-                    .AuthService
-                    .Roles
-                    .Select(r => r.Name)
-                    .ToList())
+                Roles=new HashSet<string>
+                (_manager
+                .AuthService
+                .Roles
+                .Select(r => r.Name)
+                .ToList())
             });
         }
 
@@ -40,12 +42,17 @@ namespace StoreApp.Areas.Admin.Controllers
         public async Task<IActionResult> Create([FromForm] UserDtoForCreation userDto)
         {
             var result = await _manager.AuthService.CreateUser(userDto);
-            return result.Succeeded
-                ? RedirectToAction("Index")
-                : View();
+            if (result.Succeeded)
+            {
+                return RedirectToAction();
+            }
+            else
+            {
+                return View();
+            }
         }
 
-        public async Task<IActionResult> Update([FromRoute(Name = "id")] string id)
+        public async Task<IActionResult> Update([FromRoute(Name ="id")] string id)
         {
             var user = await _manager.AuthService.GetOneUserForUpdate(id);
             return View(user);
@@ -62,6 +69,7 @@ namespace StoreApp.Areas.Admin.Controllers
             }
             return View();
         }
+
 
         public async Task<IActionResult> ResetPassword([FromRoute(Name ="id")] string id)
         {

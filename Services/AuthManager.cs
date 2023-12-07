@@ -9,18 +9,37 @@ namespace Services
     {
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly IMapper _mapper;
 
-        public AuthManager(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
+        public AuthManager(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager, IMapper mapper)
         {
             _roleManager = roleManager;
             _userManager = userManager;
+            _mapper = mapper;
         }
 
         public IEnumerable<IdentityRole> Roles => _roleManager.Roles;
 
-        public Task<IdentityResult> CreateUser(UserDtoForCreation userDto)
+        public async Task<IdentityResult> CreateUser(UserDtoForCreation userDto)
         {
-            throw new NotImplementedException();
+            var user = _mapper.Map<IdentityUser>(userDto);
+            var result = await _userManager.CreateAsync(user, userDto.Password);
+
+            if (!result.Succeeded)
+            {
+                throw new Exception("User could not be created.");
+            }
+
+            if (userDto.Roles.Count > 0)
+            {
+                var roleResult = await _userManager.AddToRolesAsync(user, userDto.Roles);
+                if (!roleResult.Succeeded)
+                {
+                    throw new Exception("System have problems with roles.");
+                }
+            }
+
+            return result;
         }
 
         public Task<IdentityResult> DeleteOneUser(string userName)
@@ -33,14 +52,23 @@ namespace Services
             return _userManager.Users.ToList();
         }
 
-        public Task<IdentityUser> GetOneUser(string userName)
+        public async Task<IdentityUser> GetOneUser(string userName)
         {
-            throw new NotImplementedException();
+            return await _userManager.FindByNameAsync(userName);
         }
 
-        public Task<UserDtoForUpdate> GetOneUserForUpdate(string userName)
+        public async Task<UserDtoForUpdate> GetOneUserForUpdate(string userName)
         {
-            throw new NotImplementedException();
+           var user = await GetOneUser(userName);
+            if (user is not null)
+            {
+                var userDto = _mapper.Map<UserDtoForUpdate>(user);
+                userDto.Roles=new HashSet<string>(Roles.Select(r => r.Name).ToList());
+                userDto.UserRoles=new HashSet<string>(await _userManager.GetRolesAsync(user));
+                return userDto;
+            }
+
+            throw new Exception("An error occured.");
         }
 
         public Task<IdentityResult> ResetPassword(ResetPasswordDto model)
@@ -48,9 +76,28 @@ namespace Services
             throw new NotImplementedException();
         }
 
-        public Task Update(UserDtoForUpdate userDto)
+        public async Task Update(UserDtoForUpdate userDto)
         {
-            throw new NotImplementedException();
+            var user = await GetOneUser(userDto.UserName);
+            user.PhoneNumber = userDto.PhoneNumber;
+            user.Email = userDto.Email;
+
+            if (user is not null)
+            {
+                var result = await _userManager.UpdateAsync(user);
+
+                if (userDto.Roles.Count > 0)
+                {
+                    var userRoles = await _userManager.GetRolesAsync(user);
+                    var r1 = await _userManager.RemoveFromRolesAsync(user, userRoles);
+                    var r2 = await _userManager.AddToRolesAsync(user, userDto.Roles);
+                }
+                return;
+            }
+
+            throw new Exception("System has problem with user update.");
+
         }
+
     }
 }
