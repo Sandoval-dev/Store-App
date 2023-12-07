@@ -28,7 +28,7 @@ namespace StoreApp.Areas.Admin.Controllers
         {
             return View(new UserDtoForCreation()
             {
-                Roles=new HashSet<string>
+                Roles = new HashSet<string>
                 (_manager
                 .AuthService
                 .Roles
@@ -52,7 +52,7 @@ namespace StoreApp.Areas.Admin.Controllers
             }
         }
 
-        public async Task<IActionResult> Update([FromRoute(Name ="id")] string id)
+        public async Task<IActionResult> Update([FromRoute(Name = "id")] string id)
         {
             var user = await _manager.AuthService.GetOneUserForUpdate(id);
             return View(user);
@@ -71,35 +71,30 @@ namespace StoreApp.Areas.Admin.Controllers
         }
 
 
-        public async Task<IActionResult> ResetPassword([FromRoute(Name ="id")] string id)
+        public async Task<IActionResult> ResetPassword([FromRoute(Name = "id")] string id)
         {
             return View(new ResetPasswordDto()
             {
                 UserName = id
-            });            
+
+            });
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ResetPassword([FromForm] ResetPasswordDto model)
         {
-            var result =  await _manager.AuthService.ResetPassword(model);
-            return result.Succeeded
-                ? RedirectToAction("Index")
-                : View();
+            var result= await _manager.AuthService.ResetPassword(model);
+            return result.Succeeded ? RedirectToAction("Index") : View();
         }
 
-        [HttpPost]        
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteOneUser([FromForm] UserDto userDto)
         {
-            var result = await _manager
-                .AuthService
-                .DeleteOneUser(userDto.UserName);
-            
-            return result.Succeeded
-                ? RedirectToAction("Index")
-                : View();
+           var result= await _manager.AuthService.DeleteOneUser(userDto.UserName);
+
+            return result.Succeeded ? RedirectToAction("Index") : View();
         }
     }
 }
