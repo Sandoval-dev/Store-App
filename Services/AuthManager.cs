@@ -10,15 +10,17 @@ namespace Services
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IMapper _mapper;
-
-        public AuthManager(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager, IMapper mapper)
+        public AuthManager(RoleManager<IdentityRole> roleManager,
+        UserManager<IdentityUser> userManager,
+        IMapper mapper)
         {
             _roleManager = roleManager;
             _userManager = userManager;
             _mapper = mapper;
         }
 
-        public IEnumerable<IdentityRole> Roles => _roleManager.Roles;
+        public IEnumerable<IdentityRole> Roles =>
+            _roleManager.Roles;
 
         public async Task<IdentityResult> CreateUser(UserDtoForCreation userDto)
         {
@@ -26,17 +28,13 @@ namespace Services
             var result = await _userManager.CreateAsync(user, userDto.Password);
 
             if (!result.Succeeded)
-            {
                 throw new Exception("User could not be created.");
-            }
 
             if (userDto.Roles.Count > 0)
             {
                 var roleResult = await _userManager.AddToRolesAsync(user, userDto.Roles);
                 if (!roleResult.Succeeded)
-                {
                     throw new Exception("System have problems with roles.");
-                }
             }
 
             return result;
@@ -57,16 +55,13 @@ namespace Services
         {
             var user = await _userManager.FindByNameAsync(userName);
             if (user is not null)
-            {
                 return user;
-            }
             throw new Exception("User could not be found.");
         }
 
         public async Task<UserDtoForUpdate> GetOneUserForUpdate(string userName)
         {
             var user = await GetOneUser(userName);
-
             var userDto = _mapper.Map<UserDtoForUpdate>(user);
             userDto.Roles = new HashSet<string>(Roles.Select(r => r.Name).ToList());
             userDto.UserRoles = new HashSet<string>(await _userManager.GetRolesAsync(user));
@@ -79,7 +74,6 @@ namespace Services
             await _userManager.RemovePasswordAsync(user);
             var result = await _userManager.AddPasswordAsync(user, model.Password);
             return result;
-
         }
 
         public async Task Update(UserDtoForUpdate userDto)
@@ -88,7 +82,6 @@ namespace Services
             user.PhoneNumber = userDto.PhoneNumber;
             user.Email = userDto.Email;
             var result = await _userManager.UpdateAsync(user);
-
             if (userDto.Roles.Count > 0)
             {
                 var userRoles = await _userManager.GetRolesAsync(user);
@@ -96,9 +89,6 @@ namespace Services
                 var r2 = await _userManager.AddToRolesAsync(user, userDto.Roles);
             }
             return;
-
-
         }
-
     }
 }
