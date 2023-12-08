@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Services.Contracts;
 
 namespace StoreApp.Components
 {
     public class OrderInProgressViewComponent : ViewComponent
     {
-
+        
         private readonly IServiceManager _manager;
 
         public OrderInProgressViewComponent(IServiceManager manager)

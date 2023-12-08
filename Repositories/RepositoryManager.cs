@@ -1,9 +1,4 @@
-﻿using Repositories.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Repositories.Contracts;
 
 namespace Repositories
 {
@@ -14,10 +9,13 @@ namespace Repositories
         private readonly ICategoryRepository _categoryRepository;
         private readonly IOrderRepository _orderRepository;
 
-        public RepositoryManager(IProductRepository productRepository, RepositoryContext context, ICategoryRepository categoryRepository, IOrderRepository orderRepository)
+        public RepositoryManager(IProductRepository productRepository,
+        RepositoryContext context,
+        ICategoryRepository categoryRepository,
+        IOrderRepository orderRepository)
         {
-            _productRepository = productRepository;
             _context = context;
+            _productRepository = productRepository;
             _categoryRepository = categoryRepository;
             _orderRepository = orderRepository;
         }
